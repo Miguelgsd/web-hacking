@@ -1,28 +1,39 @@
-Um ataque de XSS ocorre quando um atacante usa sites ligítimos para enviar scripts maliciosos a um usuário. Isso pode ocorrer por meio de campos de entrada sem validação ou codificação.
-Uma forma de identificar é procurar por parâmtros na URL que são refletidos na página ou casos onde um dado inserido em um campo de entrada também é exibido dessa forma.
+# XSS
+### O XSS é uma vulnerabilidade que ocorre quando um atacante consegue injetar scripts maliciosos (geralmente JavaScript) em páginas web visualizadas por outros usuários. Diferente de outros ataques, o alvo principal aqui não é o banco de dados, mas a sessão e os dados do navegador da vítima.
 
-Um ataque de XSS pode adotar 3 formas:
-	Reflected XSS ->	Pode ocorrer na exploração de parâmetros; um exemplo de uso seria quando um atacante cria um script malicioso que captura os cookies do usuário e os envia para um servidor de seu domínio. Quando o usuário clicar no link (onde o script foi injetado), seu navegador automaticamente irá executar o código.
-	Stored XSS ->		Ocorre quando o script malicioso fica permanentemente salvo no servidor-alvo. Um exemplo bem comum é em fóruns, onde todos os usuários tem a possibilidade de escrever algo e salvar em servidores. Na prática, um atacante iria criar um script malicioso e inserir no campo de entrada. Quando fosse salvo, o código ficaria disponível na página inicial e, quando qualquer pessoa acessasse, ele seria executado pelo navegador.
-	DOM based XSS ->	Ocorre quando não há interação com o servidor: o JavaScript do navegador da vítima faz o trabalho completo, pegando dados da URL e injetando no Document Object Model (DOM) do navegador sem sanitização. Não aparece em logs e pode causar um bypass de WAFs.
+## Como identificar?
+A forma mais comum de identificar o XSS é buscar por pontos de entrada (inputs, parâmetros de URL, formulários) cujos dados são refletidos na página sem a devida sanitização ou codificação (encoding).
 
----------------------------------------------------------------------------------------------------------------------------
-Exemplo de Stored XSS no Mutillidae
+## Tipos
+Um ataque de XSS pode adotar 3 formas:  
+* **Reflected XSS** ->	Permite ao atacante inserir scripts maliciosos em Javascript em um parâmetro vulnerável do site. Precisa de interação direta com o usuário, envolvendo um pouco de engenharia social. Ao clicar no link com o script malicioso, o navegador da vítima executa o código sem que ela perceba, podendo ocasionar em roubos de sessão.  
+* **Stored XSS** ->		Sendo relativamente mais perigoso que o Reflected, o Stored XSS consiste em armazenar o script malicioso na página vulnerável. Desta vez, não é necessário uma interação direta com o usuário. Alguns dos cenários possíveis são fóruns vulneráveis ou sistemas de avaliações de produtos, onde o atacante pode inserir um determinado texto que será mostrado para todos que visitarem a página. Injetando um payload Javascript, o navegador de qualquer usuário irá executá-lo automaticamente ao carregar a página.  
+* **DOM based XSS** ->	Diferente dos anteriores, este ocorre inteiramente no lado do cliente (client-side). O script malicioso é executado quando o JavaScript legítimo da página lê dados de uma fonte controlada pelo usuário (como a fragmentação da URL após o #) e os escreve de forma insegura no DOM. Para a vantagem do atacante, como os dados após o # muitas vezes não são enviados ao servidor, o ataque pode passar despercebido por logs de servidor e WAFs (Web Application Firewalls).
 
-OWASP 2013 > Cross Site Scripting > Persistent > Add to your blog
+---
+**Exemplos**  
+Alguns exemplos de scripts que podem ser usados, dependendo do contexto, são:  
+```html
+	1. <script>alert('XSS!')</script>  
+	2. <script>print()</script>
+	3. <script>alert(document.domain)</script>  
+	4. <img src="x" onerror="alert(1)">
+	5. <input autofocus onfocus="alert(1)">  
+	6. <video><source onerror="alert(1)">
+	7. <a href="javascript:alert(1)">Teste</a>  
+```
+Apenas se lembre de que, como pentester, você deve avaliar o contexto e descobrir o que irá se encaixar melhor em sua situação. Não é garantido que eles irão funcionar sempre.
 
-A vulnerabilidade Stored XSS nos permite injetar códigos JavaScript maliciosos e armazená-los no sistema.
-Isso é perigoso pois o código será executado pelo navegador de todas as pessoas que acessarem a página.
-Exemplo:
-	Vá no campo de entrada do site e digite:
-	<script>alert("Hello World")</script>
-	Isso fará com que o código fique armazenado no blog, sendo executado por todos que acessarem.
+## Prevenção
 
-Veja a aba "Hints ans Videos" 
----------------------------------------------------------------------------------------------------------------------------
+Algumas formas de prevenção são:  
+1. **Output Encoding**: Converter caracteres especiais (como < para &lt;) antes de exibir no HTML.  
+2. **Content Security Policy (CSP)**: Uma camada de segurança extra que ajuda a detectar e mitigar ataques XSS, restringindo de onde os scripts podem ser carregados.  
+3. **HttpOnly Flags**: Configurar cookies com a flag HttpOnly impede que o JavaScript acesse os cookies, anulando ataques de roubo de sessão via XSS.  
 
-Alguns casos de XSS:
-	eBay		Reflected XSS	Parâmetro "url" não validado permitiu redirecionamentos maliciosos, roubando sessões de usuários.
-	WhatsApp	Reflected XSS 	XSS via link em chamadas instalou spyware (NSO Group), afetando 1,5 bilhão de usuários.
-	Spotify		Reflected XSS	Redirecionamento via "javascript:" em URLs permitiu execução de JS, roubando sessões.
-	eBay		Stored XSS		XSS em listagens de veículos permitiu roubo de credenciais, criando mais fraudes.
+---
+## Exemplos práticos
+Para se ter um pouco de prática, irei listar alguns sites interessantes onde é possível (e autorizado) explorar essas falhas:  
+* [Laboratórios do PortSwigger](https://portswigger.net/web-security/all-labs#cross-site-scripting)
+* [Google XSS Game](https://xss-game.appspot.com/)
+* [Juice Shop](http://juice-shop.herokuapp.com/#/)
