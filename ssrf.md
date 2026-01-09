@@ -1,33 +1,39 @@
-SSRF é uma vulnerabilidade que permite forçar o servidor a fazer uma requisição.
-Isso acontece quando uma aplicação possui uma funcionalidade para importar dados de uma URL, podendo permitir ao atacante alterar a URL em que será feita a requisição e acessar dados sensíveis que não deveriam ser acessados.
-Por exemplo, veja a seguinte requisição:
+# Server-Side Request Forgery
+### O SSRF é uma vulnerabilidade que permite a um atacante forçar o servidor a realizar requisições HTTP para destinos que o atacante escolher. Geralmente, o alvo são sistemas internos que estão atrás de um firewall e não podem ser acessados diretamente pela internet.
 
-	POST /product/stock HTTP/1.0
-	Content-Type: application/x-www-form-urlencoded
-	Content-Length: 118
+## Cenários e Tipos
+A falha surge quando uma aplicação precisa buscar recursos externos (como uma foto de perfil de outro site, integração com APIs ou validação de URLs) e confia no input do usuário sem validar se o destino é seguro.  
 
-	stockApi=http://stock.weliketoshop.net:8080/product/stock/check%3FproductId%3D6%26storeId%3D1
+**Tipos:**  
+1. **SSRF contra o próprio servidor (localhost)**  
+   Neste cenário, o atacante força o servidor a requisitar serviços rodando em loopback. Um exemplo é:  
+   `stockApi=http://stock.weliketoshop.net:8080/check` -> realiza uma requisição a uma API.  
+   `stockApi=http://localhost/admin` -> hacker altera a requisição e acessa o painel administrativo, burlando controles de acesso.
 
-Perceba que ela está buscando dados de uma API via URL. Isso configura como uma vulnerabilidade de SSRF, pois o atacante pode modificá-la para acessar dados sensíveis, como:
+2. **SSRF contra outros sistemas internos**
+   Neste outro cenário, o atacante irá utilizar o servidor vulnerável para descobrir e interagir com outros sistemas dentro da rede que não deveriam estar acessíveis externamente. Exemplo:
+   `stockApi=http://192.168.0.15:5432` -> utiliza a mesma requisição de antes, mas tentando atingir outro alvo dentro da rede.
 
-	POST /product/stock HTTP/1.0
-	Content-Type: application/x-www-form-urlencoded
-	Content-Length: 118
+## Bypass de Filtros
+Em alguns casos, os servidores podem bloquear certas palavras ou IPs, como "admin" ou "127.0.0.1". Para te dar uma possibilidade de escapar disso, listarei algumas formas representativas:
 
-	stockApi=http://localhost/admin
+* **127.0.0.1**
+  
+  | Forma       | Representação |
+  |-------------|---------------|
+  | Abreviado   | 127.1         |
+  | Decimal     | 2130706433    |
+  | Hexadecimal | 0x7f000001    |
+  | Octal       | 0177.0.0.1    |
 
-Dessa forma, é feita uma requisição para um endereço local da máquina, causando um bypass no access control.
+* **Admin**
+  | admin | %2561dmin                                |
+  |-------|------------------------------------------|
+  | admin | %2561%2564%256d%2569%256e (duplo encode) |
+  | admin | ad%6din                                  |
 
-Em alguns casos, é possível haver filtros que impedem certos hosts e palavras, como "localhost", "127.0.0.1", "admin", entre outros. Uma possível solução é a ofuscação de strings, como nos exemplos a seguir:
-	127.0.0.1 -> 127.1
-	127.0.0.1 -> 2130706433 (decimal)
-	127.0.0.1 -> 0x7f000001 (hexadecimal)
-	127.0.0.1 -> 0177.0.0.1 (octal)
-	admin -> %2561dmin
-	admin -> %2561%2564%256d%2569%256e (duplo encode)
-	admin -> ad%6din
-
-Exemplo prático:
-	No Juice Shop, na aba de foto de perfil, é possível forçar a página a fazer download de um link específico
-	O link é carregado e inserido em um caminho. Descubra-o
-	Tente acessar dados dentro do localhost.
+---
+## Exemplos Práticos
+Para praticar a exploração dessa vulnerabilidade em ambientes autorizados, irei listar alguns sites:
+* [Laboratórios do PortSwigger](https://portswigger.net/web-security/all-labs#server-side-request-forgery-ssrf)
+* [Juice Shop](https://juice-shop.herokuapp.com/#/)
