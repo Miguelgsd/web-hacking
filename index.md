@@ -35,7 +35,6 @@ Minha abordagem segue os padrões do **OWASP WSTG** (Web Security Testing Guide)
 * [SSRF](ssrf.md)
 * [RFI](RFI.md)
 * [LFI](LFI.md)
-* [Directory Traversal](Directory.md)
 * [Open Redirect](open.md)
 
 ### 🛠️ Scripts & Automação
