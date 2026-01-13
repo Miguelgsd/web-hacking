@@ -24,7 +24,7 @@ Minha abordagem segue os padrões do **OWASP WSTG** (Web Security Testing Guide)
 
 ---
 
-## 📑 Categorias do Blog
+## 📑 Categorias 
 
 ### 🕵️ Reconhecimento (Recon)
 * [Whois](whois.md)
@@ -38,6 +38,10 @@ Minha abordagem segue os padrões do **OWASP WSTG** (Web Security Testing Guide)
 * [RFI](RFI.md)
 * [LFI](LFI.md)
 * [Open Redirect](open.md)
+
+### 🚩 Capture The Flag
+* [Hacker101 CTF](https://ctf.hacker101.com/)
+* [picoCTF](https://picoctf.org/)
 
 ---
 
