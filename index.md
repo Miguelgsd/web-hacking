@@ -19,6 +19,8 @@ Minha abordagem segue os padrões do **OWASP WSTG** (Web Security Testing Guide)
 - **Bancocn.com**
 - **Mutillidae**
 - **Juice Shop**
+- **PortSwigger**
+- **TryHackMe**
 
 ---
 
@@ -37,16 +39,12 @@ Minha abordagem segue os padrões do **OWASP WSTG** (Web Security Testing Guide)
 * [LFI](LFI.md)
 * [Open Redirect](open.md)
 
-### 🛠️ Scripts & Automação
-* [Meus Scripts Bash de Automação](scripts/my-tools.md)
-* [Configuração de ambiente Docker para testes](labs/docker-setup.md)
-
 ---
 
 ## 🔗 Referências Úteis
 * [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-* [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
-* [HackTricks Cloud/Web](https://book.hacktricks.xyz/)
+* [PortSwigger Academy](https://portswigger.net/web-security/)
+* [Introdução ao Hacking e Pentest](https://solyd.com.br/cursos/introducao-ao-hacking-e-pentest-2/)
 
 ---
 > ⚠️ **Aviso:** Todo o conteúdo aqui tem fins estritamente educacionais. Não me responsabilizo pelo uso indevido das informações.
