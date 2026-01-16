@@ -17,7 +17,6 @@ Minha abordagem segue os padrões do **OWASP WSTG** (Web Security Testing Guide)
 ## 🧪 Laboratórios Utilizados
 
 - **Bancocn.com**
-- **Mutillidae**
 - **Juice Shop**
 - **PortSwigger**
 - **TryHackMe**
@@ -25,6 +24,9 @@ Minha abordagem segue os padrões do **OWASP WSTG** (Web Security Testing Guide)
 ---
 
 ## 📑 Categorias 
+
+### 🌐 Redes
+* [Fundaamentos de Redes](redes.md)
 
 ### 🕵️ Reconhecimento (Recon)
 * [Whois](whois.md)
