@@ -2,17 +2,17 @@
 ## A seguir, irei mostrar os principais fundamentos sobre Redes e Internet.
 
 ### Tipos de redes
-**LAN** (Local Area Network): imagine os dispositivos que estão conectados ao seu roteador. Todos eles formam uma LAN. Em uma LAN, cada dispositivo tem um IP privado, usado para a comunicação entre eles.  
-**WAN** (Wide Area Network): pense em redes LAN interligadas. Este conjunto de LANs formam uma WAN.  
-**PAN** (Personal Area Network): uma rede com alcance menor, mais usada em conexões Bluetooth.  
-**MAN** (Metropolitan Area Network): meio-termo entre LAN e WAN. Pense no caso em que uma prefeitura precisa interligar seus departamentos; a MAN é uma infraestrutura que une esses pontos.  
+* **LAN** (Local Area Network): imagine os dispositivos que estão conectados ao seu roteador. Todos eles formam uma LAN. Em uma LAN, cada dispositivo tem um IP privado, usado para a comunicação entre eles.  
+* **WAN** (Wide Area Network): pense em redes LAN interligadas. Este conjunto de LANs formam uma WAN.  
+* **PAN** (Personal Area Network): uma rede com alcance menor, mais usada em conexões Bluetooth.  
+* **MAN** (Metropolitan Area Network): meio-termo entre LAN e WAN. Pense no caso em que uma prefeitura precisa interligar seus departamentos; a MAN é uma infraestrutura que une esses pontos.  
 
 ### Dispositivos de Rede
-Repetidor: É o dispositivo mais simples. Sua única função é receber um sinal elétrico ou óptico e regenerá-lo para que ele possa percorrer distâncias maiores sem perda de integridade.    
-Hub: Funciona como um repetidor com várias portas. Quando um dado chega em uma porta, o Hub o retransmite para todas as outras portas. Pode gerar problemas no tráfego (congestionamento) e de segurança (todos têm acesso aos dados enviados).  
-Bridge: A Bridge é usada para dividir uma rede grande em dois segmentos menores. Ela é mais inteligente que o Hub porque consegue ler o Endereço MAC dos dispositivos.  
-Switch: O Switch é, essencialmente, uma Bridge com várias portas. Ele é o "cérebro" da rede local (LAN).
-Roteadores: Enquanto o Switch conecta computadores, o Roteador conecta redes diferentes (ex: sua casa com a Internet). Trabalha com endereços IP e traduz o tráfego da rede privada para a rede pública.  
+* **Repetidor**: É o dispositivo mais simples. Sua única função é receber um sinal elétrico ou óptico e regenerá-lo para que ele possa percorrer distâncias maiores sem perda de integridade.    
+* **Hub**: Funciona como um repetidor com várias portas. Quando um dado chega em uma porta, o Hub o retransmite para todas as outras portas. Pode gerar problemas no tráfego (congestionamento) e de segurança (todos têm acesso aos dados enviados).  
+* **Bridge**: A Bridge é usada para dividir uma rede grande em dois segmentos menores. Ela é mais inteligente que o Hub porque consegue ler o Endereço MAC dos dispositivos.  
+* **Switch**: O Switch é, essencialmente, uma Bridge com várias portas. Ele é o "cérebro" da rede local (LAN).
+* **Roteadores**: Enquanto o Switch conecta computadores, o Roteador conecta redes diferentes (ex: sua casa com a Internet). Trabalha com endereços IP e traduz o tráfego da rede privada para a rede pública.  
 
 ---
 
