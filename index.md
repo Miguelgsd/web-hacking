@@ -31,6 +31,7 @@ Minha abordagem segue os padrões do **OWASP WSTG** (Web Security Testing Guide)
 ### 🕵️ Reconhecimento (Recon)
 * [Whois](whois.md)
 * [Reverse DNS Lookup](reverse_dns_lookup.md)
+* [Zone Transfer Attack](axfr.md)
 
 ### 🔓 Vulnerabilidades (Write-ups)
 * [SQL Injection](SQLi1.md)
